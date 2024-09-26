@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "outfit-bold",
-    fontSize: 30,
+    fontSize: 35,
     textAlign: "center",
   },
   description: {
