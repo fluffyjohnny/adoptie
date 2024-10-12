@@ -8,8 +8,47 @@ import {
 } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
+import * as WebBrowser from "expo-web-browser";
+import { Link } from "expo-router";
+import { useOAuth } from "@clerk/clerk-expo";
+import * as Linking from "expo-linking";
+
+export const useWarmUpBrowser = () => {
+  React.useEffect(() => {
+    // Warm up the android browser to improve UX
+    // https://docs.expo.dev/guides/authentication/#improving-user-experience
+    void WebBrowser.warmUpAsync();
+    return () => {
+      void WebBrowser.coolDownAsync();
+    };
+  }, []);
+};
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
+  useWarmUpBrowser();
+
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+
+  const onPress = React.useCallback(async () => {
+    try {
+      const { createdSessionId, signIn, signUp, setActive } =
+        await startOAuthFlow({
+          redirectUrl: Linking.createURL("/home", { scheme: "myapp" }),
+        });
+
+      if (createdSessionId) {
+        console.log(createdSessionId);
+        setActive!({ session: createdSessionId });
+      } else {
+        // Use signIn or signUp for next steps such as MFA
+      }
+    } catch (err) {
+      console.error("OAuth error", err);
+    }
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -21,7 +60,7 @@ export default function LoginScreen() {
         <Text style={styles.description}>
           Let's find your next best friend.
         </Text>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={onPress}>
           <Text style={styles.btnText}>Let's go</Text>
         </Pressable>
       </View>
