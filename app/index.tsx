@@ -1,9 +1,21 @@
 import { useUser } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { Redirect, useRootNavigationState } from "expo-router";
+import { useEffect } from "react";
+import { View } from "react-native";
 
 export default function Index() {
   const { user } = useUser();
+  const rootNavigationState = useRootNavigationState();
+
+  useEffect(() => {
+    checkNavigation();
+  }, []);
+
+  const checkNavigation = () => {
+    if (!rootNavigationState.key) {
+      return null;
+    }
+  };
 
   return (
     <View
@@ -11,11 +23,7 @@ export default function Index() {
         flex: 1,
       }}
     >
-      <Pressable>
-        <Link href={"/login"}>
-          <Text>Go to Login Screen</Text>
-        </Link>
-      </Pressable>
+      {user ? <Redirect href={"/home"} /> : <Redirect href={"/login"} />}
     </View>
   );
 }
