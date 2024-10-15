@@ -54,6 +54,13 @@ export default function RootLayout() {
       <ClerkLoaded>
         <Stack>
           <Stack.Screen name="index" />
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="login/index" />
         </Stack>
       </ClerkLoaded>
     </ClerkProvider>
