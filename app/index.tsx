@@ -23,7 +23,7 @@ export default function Index() {
         flex: 1,
       }}
     >
-      {user ? <Redirect href={"/home"} /> : <Redirect href={"/login"} />}
+      {user ? <Redirect href={"/(tabs)/home"} /> : <Redirect href={"/login"} />}
     </View>
   );
 }
