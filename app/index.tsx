@@ -12,7 +12,7 @@ export default function Index() {
   }, []);
 
   const checkNavigation = () => {
-    if (!rootNavigationState.key) {
+    if (!rootNavigationState?.key) {
       return null;
     }
   };
