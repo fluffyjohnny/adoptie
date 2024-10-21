@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
@@ -25,10 +25,17 @@ export default function Slider() {
         data={sliders}
         renderItem={({ item, index }) => (
           <View>
-            <Image source={{ uri: item?.url }} />
+            <Image style={styles.image} source={{ uri: item?.url }} />
           </View>
         )}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    width: "100%",
+    height: 200,
+  },
+});
