@@ -1,8 +1,7 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList } from "react-native";
 import React, { useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
-import { FlatList } from "react-native-gesture-handler";
 
 export default function Slider() {
   const [sliders, setSliders] = React.useState<any[]>([]);
@@ -12,8 +11,9 @@ export default function Slider() {
   }, []);
 
   const getSliders = async () => {
-    const docRef = await getDocs(collection(db, "sliders"));
-    docRef.forEach((doc) => {
+    setSliders([]);
+    const snapshot = await getDocs(collection(db, "sliders"));
+    snapshot.forEach((doc) => {
       console.log(doc.data());
       setSliders((sliders) => [...sliders, doc.data()]);
     });
@@ -25,6 +25,7 @@ export default function Slider() {
         data={sliders}
         renderItem={({ item, index }) => (
           <View>
+            <Text>{item}</Text>
             <Image style={styles.image} source={{ uri: item?.url }} />
           </View>
         )}
