@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20,
+    marginBottom: 10,
+    marginTop: 20,
   },
   welcomeText: {
     fontFamily: "outfit",

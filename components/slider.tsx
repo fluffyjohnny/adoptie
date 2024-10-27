@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, FlatList } from "react-native";
+import { View, Image, StyleSheet, FlatList, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
@@ -13,7 +13,7 @@ export default function Slider() {
   const getSliders = async () => {
     const snapshot = await getDocs(collection(db, "Sliders"));
     snapshot.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       setSliders((x) => [...x, doc.data()]);
     });
   };
@@ -22,9 +22,10 @@ export default function Slider() {
     <View>
       <FlatList
         data={sliders}
-        renderItem={({ item, index }) => (
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }) => (
           <View>
-            <Text>{item.name}</Text>
             <Image style={styles.image} source={{ uri: item?.url }} />
           </View>
         )}
@@ -35,7 +36,9 @@ export default function Slider() {
 
 const styles = StyleSheet.create({
   image: {
-    width: "50%",
-    height: 200,
+    width: Dimensions.get("screen").width * 0.7,
+    height: 160,
+    borderRadius: 5,
+    marginRight: 10,
   },
 });
