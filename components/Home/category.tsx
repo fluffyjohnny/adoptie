@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import { FlatList } from "react-native-gesture-handler";
+import Colors from "@/constants/Colors";
 
 export default function Category() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -24,11 +25,12 @@ export default function Category() {
       <Text>Category</Text>
       <FlatList
         data={categories}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
+        numColumns={4}
         renderItem={({ item }) => (
           <View>
-            <Image style={styles.image} source={{ uri: item?.url }} />
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{ uri: item?.url }} />
+            </View>
           </View>
         )}
       />
@@ -37,10 +39,12 @@ export default function Category() {
 }
 
 const styles = {
+  imageContainer: {
+    padding: 10,
+    backgroundColor: Colors.PRIMARY,
+  },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginRight: 10,
+    width: 40,
+    height: 40,
   },
 };
