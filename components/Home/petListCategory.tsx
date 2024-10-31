@@ -1,10 +1,11 @@
 import { View, Text } from "react-native";
 import React from "react";
+import Category from "./category";
 
-export default function category() {
+export default function PetListCategory() {
   return (
     <View>
-      <Text>category</Text>
+      <Category />
     </View>
   );
 }
