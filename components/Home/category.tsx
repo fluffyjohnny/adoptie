@@ -4,7 +4,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import Colors from "@/constants/Colors";
 
-export default function Category() {
+interface CategoryProps {
+  category: (value: string) => void;
+}
+
+export default function Category({ category }: CategoryProps) {
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
