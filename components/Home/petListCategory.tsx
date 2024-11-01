@@ -7,12 +7,14 @@ import PetListItem from "./petListItem";
 
 export default function PetListCategory() {
   const [pets, setPets] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getPetList("Dogs");
+    getPetList("Fish");
   }, []);
 
   const getPetList = async (category: string) => {
+    setLoading(true);
     setPets([]);
     const q = query(collection(db, "Pets"), where("category", "==", category));
     const snapshot = await getDocs(q);
@@ -20,14 +22,18 @@ export default function PetListCategory() {
     snapshot.forEach((doc) => {
       setPets((x) => [...x, doc.data()]);
     });
+
+    setLoading(false);
   };
 
   return (
     <View>
-      <Category category={(value: string) => getPetList(value)} />
+      <Category category={(value) => getPetList(value)} />
       <FlatList
         data={pets}
         horizontal={true}
+        refreshing={loading}
+        onRefresh={() => getPetList("Fish")}
         renderItem={({ item }: { item: any }) => <PetListItem pet={item} />}
       />
     </View>

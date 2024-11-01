@@ -31,7 +31,10 @@ export default function Category({ category }: CategoryProps) {
         numColumns={4}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => setSelectedCategory(item?.name)}
+            onPress={() => {
+              setSelectedCategory(item?.name);
+              category(item?.name);
+            }}
             style={{ flex: 1 }}
           >
             <View
