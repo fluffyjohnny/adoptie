@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
@@ -6,7 +6,7 @@ import Colors from "@/constants/Colors";
 
 export default function Category() {
   const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("Dogs");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     getCategories();
@@ -26,12 +26,20 @@ export default function Category() {
         data={categories}
         numColumns={4}
         renderItem={({ item }) => (
-          <View style={{ flex: 1 }}>
-            <View style={styles.imageContainer}>
+          <TouchableOpacity
+            onPress={() => setSelectedCategory(item?.name)}
+            style={{ flex: 1 }}
+          >
+            <View
+              style={[
+                styles.imageContainer,
+                selectedCategory == item?.name && styles.selectedCategory,
+              ]}
+            >
               <Image style={styles.image} source={{ uri: item?.url }} />
             </View>
             <Text style={styles.name}>{item?.name}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -59,5 +67,8 @@ const styles = {
     textAlign: "center" as "center",
     fontFamily: "outfit",
     color: Colors.GRAY,
+  },
+  selectedCategory: {
+    backgroundColor: Colors.PRIMARY,
   },
 };
