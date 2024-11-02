@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Header from "../../components/Home/header";
 import Slider from "../../components/Home/slider";
@@ -11,6 +11,9 @@ export default function Home() {
       <Header />
       <Slider />
       <PetListCategory />
+      <View>
+        <Text>Add New Pet</Text>
+      </View>
     </SafeAreaView>
   );
 }

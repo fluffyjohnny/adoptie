@@ -10,7 +10,7 @@ export default function PetListCategory() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getPetList("Fish");
+    getPetList("Dogs");
   }, []);
 
   const getPetList = async (category: string) => {
@@ -33,7 +33,7 @@ export default function PetListCategory() {
         data={pets}
         horizontal={true}
         refreshing={loading}
-        onRefresh={() => getPetList("Fish")}
+        onRefresh={() => getPetList("Dogs")}
         renderItem={({ item }: { item: any }) => <PetListItem pet={item} />}
       />
     </View>
