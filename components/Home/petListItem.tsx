@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 
@@ -8,14 +8,14 @@ interface PetListItemProps {
 
 export default function PetListItem({ pet }: PetListItemProps) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <Image source={{ uri: pet?.url }} style={styles.image} />
       <Text style={styles.name}>{pet?.name}</Text>
       <View style={styles.descriptionContainer}>
         <Text style={styles.breed}>{pet?.breed}</Text>
         <Text style={styles.age}>{pet?.age} YRS</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

@@ -6,10 +6,11 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import Header from "../../components/Home/header";
-import Slider from "../../components/Home/slider";
-import PetListCategory from "@/components/Home/petListCategory";
+import Header from "../../components/Home/Header";
+import Slider from "../../components/Home/Slider";
+import PetListCategory from "@/components/Home/PetListCategory";
 import Colors from "@/constants/Colors";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <PetListCategory />
       </View>
       <TouchableOpacity style={styles.addPetBtn}>
+        <MaterialIcons name="add" size={24} color={Colors.PRIMARY} />
         <Text>Add New Pet</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -35,10 +37,14 @@ const styles = StyleSheet.create({
   },
   addPetBtn: {
     backgroundColor: Colors.SECONDARY,
+    display: "flex",
+    flexDirection: "row",
+    gap: 5,
     fontFamily: "outfit-bold",
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
     marginBottom: 10,
   },

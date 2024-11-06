@@ -1,20 +1,20 @@
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
-import Category from "./category";
+import Category from "./ Category";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
-import PetListItem from "./petListItem";
+import PetListItem from "./PetListItem";
 
 export default function PetListCategory() {
   const [pets, setPets] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getPetList("Dogs");
   }, []);
 
   const getPetList = async (category: string) => {
-    setLoading(true);
+    setIsLoading(true);
     setPets([]);
     const q = query(collection(db, "Pets"), where("category", "==", category));
     const snapshot = await getDocs(q);
@@ -23,7 +23,7 @@ export default function PetListCategory() {
       setPets((x) => [...x, doc.data()]);
     });
 
-    setLoading(false);
+    setIsLoading(false);
   };
 
   return (
@@ -31,10 +31,11 @@ export default function PetListCategory() {
       <Category category={(value) => getPetList(value)} />
       <FlatList
         data={pets}
-        refreshing={loading}
+        refreshing={isLoading}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }: { item: any }) => <PetListItem pet={item} />}
-        style={{ maxHeight: 400 }}
+        style={{ height: 390 }}
         // onRefresh={() => getPetList("Dogs")}
       />
     </View>
