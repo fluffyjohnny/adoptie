@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 130,
+    height: 90,
     objectFit: "cover" as "cover",
     borderRadius: 10,
   },

@@ -33,8 +33,9 @@ export default function PetListCategory() {
         data={pets}
         refreshing={loading}
         numColumns={2}
-        onRefresh={() => getPetList("Dogs")}
         renderItem={({ item }: { item: any }) => <PetListItem pet={item} />}
+        style={{ maxHeight: 400 }}
+        // onRefresh={() => getPetList("Dogs")}
       />
     </View>
   );
