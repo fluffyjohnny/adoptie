@@ -21,13 +21,15 @@ export default function PetListItem({ pet }: PetListItemProps) {
 
 const styles = StyleSheet.create({
   container: {
+    width: "48%",
     padding: 15,
     marginRight: 15,
+    marginBottom: 15,
     borderRadius: 20,
     backgroundColor: Colors.WHITE,
   },
   image: {
-    width: 160,
+    width: "100%",
     height: 130,
     objectFit: "cover" as "cover",
     borderRadius: 10,
@@ -48,6 +50,8 @@ const styles = StyleSheet.create({
     fontFamily: "outfit",
     fontSize: 14,
     color: Colors.GRAY,
+    maxWidth: "50%",
+    overflow: "hidden",
   },
   age: {
     fontFamily: "outfit",
