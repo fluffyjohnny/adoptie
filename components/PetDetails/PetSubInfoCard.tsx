@@ -1,17 +1,30 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageSourcePropType,
+} from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 
-export default function PetSubInfoCard({ pet }: any) {
+interface PetSubInfoCardProps {
+  icon: ImageSourcePropType;
+  title: string;
+  value: string;
+}
+
+export default function PetSubInfoCard({
+  icon,
+  title,
+  value,
+}: PetSubInfoCardProps) {
   return (
     <View style={styles.innerContainer}>
-      <Image
-        source={require("./../../assets/images/calendar.png")}
-        style={styles.calendar}
-      />
+      <Image source={icon} style={styles.calendar} />
       <View>
-        <Text style={styles.age}>Age</Text>
-        <Text style={styles.ageNumber}>{pet?.age} YRS</Text>
+        <Text style={styles.age}>{title}</Text>
+        <Text style={styles.ageNumber}>{value}</Text>
       </View>
     </View>
   );
@@ -30,8 +43,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   calendar: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
   },
   age: {
     fontFamily: "outfit",
@@ -40,6 +53,6 @@ const styles = StyleSheet.create({
   },
   ageNumber: {
     fontFamily: "outfit-medium",
-    fontSize: 20,
+    fontSize: 16,
   },
 });

@@ -9,7 +9,6 @@ export default function PetInfo({ pet }: any) {
       <View style={styles.container}>
         <View>
           <Text style={styles.name}>{pet?.name}</Text>
-          <Text style={styles.breed}>{pet?.breed}</Text>
         </View>
         <TouchableOpacity>
           <Ionicons name="heart-outline" size={20} />
@@ -35,14 +34,5 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "outfit-bold",
     fontSize: 27,
-  },
-  breed: {
-    fontFamily: "outfit",
-    fontSize: 16,
-  },
-  about: {
-    fontFamily: "outfit",
-    fontSize: 16,
-    marginTop: 10,
   },
 });
