@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -11,9 +11,10 @@ export default function PetInfo({ pet }: any) {
           <Text style={styles.name}>{pet?.name}</Text>
           <Text style={styles.breed}>{pet?.breed}</Text>
         </View>
-        <Ionicons name="heart-outline" size={20} />
+        <TouchableOpacity>
+          <Ionicons name="heart-outline" size={20} />
+        </TouchableOpacity>
       </View>
-      <Text style={styles.about}>{pet?.about}</Text>
     </View>
   );
 }
@@ -36,11 +37,11 @@ const styles = StyleSheet.create({
     fontSize: 27,
   },
   breed: {
-    fontFamily: "outfit-regular",
+    fontFamily: "outfit",
     fontSize: 16,
   },
   about: {
-    fontFamily: "outfit-regular",
+    fontFamily: "outfit",
     fontSize: 16,
     marginTop: 10,
   },

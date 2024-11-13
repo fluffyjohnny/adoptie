@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import PetInfo from "@/components/PetDetails/PetInfo";
@@ -19,7 +19,7 @@ export default function PetDetails() {
     <View>
       {/* <Text>{JSON.stringify(pet)}</Text> */}
       <PetInfo pet={pet} />
-      <PetSubInfo />
+      <PetSubInfo pet={pet} />
     </View>
   );
 }
