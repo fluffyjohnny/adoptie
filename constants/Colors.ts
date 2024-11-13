@@ -4,4 +4,5 @@ export default {
   GRAY: "#8F8E8D",
   WHITE: "#FFFFFF",
   BLACK: "#000000",
+  LINK: "#007AFF",
 }
