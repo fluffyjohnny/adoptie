@@ -9,24 +9,24 @@ export default function PetSubInfo({ pet }: any) {
         <PetSubInfoCard
           icon={require("./../../assets/images/calendar.png")}
           title={"Age"}
-          value={pet?.age + " YRS"}
+          value={(pet?.age ?? 0) + " YRS"}
         />
         <PetSubInfoCard
           icon={require("./../../assets/images/bone.png")}
           title={"Breed"}
-          value={pet?.breed}
+          value={pet?.breed ?? "Unknown"}
         />
       </View>
       <View style={styles.innerContainer}>
         <PetSubInfoCard
           icon={require("./../../assets/images/sex.png")}
           title={"Sex"}
-          value={pet?.sex}
+          value={pet?.sex ?? "Unknown"}
         />
         <PetSubInfoCard
           icon={require("./../../assets/images/weight.png")}
           title={"Weight"}
-          value={pet?.weight + " LB"}
+          value={(pet?.weight ?? 0) + " LB"}
         />
       </View>
     </View>

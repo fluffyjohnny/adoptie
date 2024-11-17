@@ -9,7 +9,7 @@ export default function AboutPetInfo({ pet }: any) {
     <View>
       <Text style={styles.title}>About {pet?.name}</Text>
       <Text style={styles.about} numberOfLines={readMore ? 2 : 10}>
-        {pet?.about}
+        {pet?.about ?? "No information available"}
       </Text>
       {readMore && (
         <Pressable onPress={() => setReadMore(false)}>

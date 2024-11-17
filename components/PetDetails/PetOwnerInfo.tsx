@@ -8,14 +8,19 @@ export default function PetOwnerInfo({ pet }: any) {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <View style={styles.ownerInfo}>
-          <Image source={{ uri: pet?.ownerUrl }} style={styles.image} />
+          <Image
+            source={{
+              uri: pet?.ownerUrl ?? "https://placehold.co/600x400.png",
+            }}
+            style={styles.image}
+          />
           <View>
-            <Text style={styles.title}>{pet?.ownerName}</Text>
+            <Text style={styles.title}>{pet?.ownerName ?? "Private"}</Text>
             <Text style={styles.subtitle}>Pet Owner</Text>
           </View>
         </View>
         <TouchableOpacity>
-          <Ionicons name="send-sharp" size={20} />
+          <Ionicons name="send-sharp" size={20} color={Colors.PRIMARY} />
         </TouchableOpacity>
       </View>
     </View>
