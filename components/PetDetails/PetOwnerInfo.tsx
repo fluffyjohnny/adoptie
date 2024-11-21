@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
     margin: 20,
     borderWidth: 1,
     borderRadius: 15,
+    borderColor: Colors.SECONDARY,
     backgroundColor: Colors.WHITE,
   },
   innerContainer: {
-    paddingHorizontal: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
