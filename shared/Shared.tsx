@@ -1,7 +1,7 @@
 import { db } from "@/config/FirebaseConfig";
-import { doc, getDoc, setDoc } from "firebase/firestore"; // Ensure you import setDoc
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"; // Ensure you import setDoc
 
-export const getFavoriteList = async (user: any) => {
+const getFavoriteList = async (user: any) => {
   const docRef = doc(
     db,
     "UserFavoritePets",
@@ -20,3 +20,21 @@ export const getFavoriteList = async (user: any) => {
 
   return user?.favoriteList;
 };
+
+const updateFavoriteList = async (user: any, favorites: string[]) => {
+  const docRef = doc(
+    db,
+    "UserFavoritePets",
+    user?.primaryEmailAddress?.emailAddress
+  );
+
+  try {
+    await updateDoc(docRef, {
+      favorites,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export { getFavoriteList, updateFavoriteList };
