@@ -1,8 +1,9 @@
 export default {
-  PRIMARY: "#E8B20E",
+  PRIMARY: "#f5cb5c",
   SECONDARY: "#F5E09E",
   GRAY: "#8F8E8D",
+  OUTLINE: "#333533",
   WHITE: "#FFFFFF",
-  BLACK: "#000000",
+  BLACK: "#242423",
   LINK: "#007AFF",
 }

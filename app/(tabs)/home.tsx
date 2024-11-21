@@ -21,7 +21,7 @@ export default function Home() {
         <PetListCategory />
       </View>
       <TouchableOpacity style={styles.addPetBtn}>
-        <MaterialIcons name="add" size={24} color={Colors.PRIMARY} />
+        <MaterialIcons name="add" size={24} color={Colors.BLACK} />
         <Text>Add New Pet</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   addPetBtn: {
-    backgroundColor: Colors.SECONDARY,
+    backgroundColor: Colors.PRIMARY,
     display: "flex",
     flexDirection: "row",
     gap: 5,

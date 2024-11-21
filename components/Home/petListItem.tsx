@@ -2,6 +2,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
+import SetFavorite from "../PetDetails/SetFavorite";
 
 interface PetListItemProps {
   pet: any;
@@ -21,7 +22,10 @@ export default function PetListItem({ pet }: PetListItemProps) {
       style={styles.container}
     >
       <Image source={{ uri: pet?.url }} style={styles.image} />
-      <Text style={styles.name}>{pet?.name}</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.name}>{pet?.name}</Text>
+        <SetFavorite pet={pet} />
+      </View>
       <View style={styles.descriptionContainer}>
         <Text style={styles.breed}>{pet?.breed}</Text>
         <Text style={styles.age}>{pet?.age} YRS</Text>
@@ -41,9 +45,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 90,
+    height: 120,
     objectFit: "cover" as "cover",
     borderRadius: 10,
+  },
+  headerContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 5,
   },
   name: {
     fontSize: 16,

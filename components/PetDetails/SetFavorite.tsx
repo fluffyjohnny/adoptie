@@ -45,7 +45,7 @@ export default function SetFavorite({ pet }: any) {
             addFavorite();
           }}
         >
-          <Ionicons name="heart-outline" size={20} />
+          <Ionicons name="heart-outline" color="pink" size={20} />
         </TouchableOpacity>
       )}
     </View>

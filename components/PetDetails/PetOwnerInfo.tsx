@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderWidth: 1,
     borderRadius: 15,
-    borderColor: Colors.SECONDARY,
+    borderColor: Colors.GRAY,
     backgroundColor: Colors.WHITE,
   },
   innerContainer: {

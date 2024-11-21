@@ -1,4 +1,11 @@
-import { View, Image, StyleSheet, FlatList, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  Text,
+  ImageBackground,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
@@ -26,7 +33,11 @@ export default function Slider() {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <View>
-            <Image style={styles.image} source={{ uri: item?.url }} />
+            <ImageBackground style={styles.image} source={{ uri: item?.url }}>
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>PROMO</Text>
+              </View>
+            </ImageBackground>
           </View>
         )}
       />
@@ -38,7 +49,19 @@ const styles = StyleSheet.create({
   image: {
     width: Dimensions.get("screen").width * 0.7,
     height: 160,
-    borderRadius: 5,
+    borderRadius: 10,
     marginRight: 10,
+    overflow: "hidden",
+  },
+  textContainer: {
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+    fontFamily: "outfit-bold",
   },
 });
