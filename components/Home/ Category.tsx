@@ -17,6 +17,7 @@ export default function Category({ category }: CategoryProps) {
   }, []);
 
   const getCategories = async () => {
+    setCategories([]);
     const snapshot = await getDocs(collection(db, "Categories"));
     snapshot.forEach((doc) => {
       setCategories((x) => [...x, doc.data()]);

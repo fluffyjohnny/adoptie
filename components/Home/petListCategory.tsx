@@ -20,7 +20,7 @@ export default function PetListCategory() {
     const snapshot = await getDocs(q);
 
     snapshot.forEach((doc) => {
-      setPets((x) => [...x, doc.data()]);
+      setPets((prev) => [...prev, doc.data()]);
     });
 
     setIsLoading(false);
@@ -31,12 +31,12 @@ export default function PetListCategory() {
       <Category category={(value) => getPetList(value)} />
       <FlatList
         data={pets}
+        // onRefresh={() => getPetList("Dogs")}
         refreshing={isLoading}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }: { item: any }) => <PetListItem pet={item} />}
         style={{ height: 390 }}
-        // onRefresh={() => getPetList("Dogs")}
       />
     </View>
   );
