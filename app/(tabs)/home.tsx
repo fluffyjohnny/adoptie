@@ -11,6 +11,7 @@ import Slider from "../../components/Home/Slider";
 import PetListCategory from "@/components/Home/PetListCategory";
 import Colors from "@/constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 export default function Home() {
   return (
@@ -20,10 +21,12 @@ export default function Home() {
         <Slider />
         <PetListCategory />
       </View>
-      <TouchableOpacity style={styles.addPetBtn}>
-        <MaterialIcons name="add" size={24} color={Colors.BLACK} />
-        <Text>Add New Pet</Text>
-      </TouchableOpacity>
+      <Link href={"/add-new-pet"} style={styles.addPetBtnContainer}>
+        <View style={styles.addPetBtn}>
+          <MaterialIcons name="add" size={24} color={Colors.BLACK} />
+          <Text>Add New Pet</Text>
+        </View>
+      </Link>
     </SafeAreaView>
   );
 }
@@ -35,17 +38,21 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
   },
+  addPetBtnContainer: {
+    backgroundColor: Colors.PRIMARY,
+    textAlign: "center",
+    fontFamily: "outfit-bold",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10,
+  },
   addPetBtn: {
     backgroundColor: Colors.PRIMARY,
     display: "flex",
     flexDirection: "row",
-    gap: 5,
-    fontFamily: "outfit-bold",
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
-    marginBottom: 10,
+    alignItems: "center",
+    gap: 5,
   },
 });
