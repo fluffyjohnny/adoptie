@@ -34,6 +34,9 @@ export default function InputField({
         }}
         numberOfLines={numberOfLines}
         multiline={numberOfLines ? true : false}
+        keyboardType={
+          title === "Age*" || title === "Weight*" ? "number-pad" : "default"
+        }
         style={styles.input}
       />
       {!!error && <Text style={{ color: "red" }}>{error}</Text>}

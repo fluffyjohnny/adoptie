@@ -5,6 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  ToastAndroid,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
@@ -12,13 +14,14 @@ import Colors from "@/constants/Colors";
 import InputField from "@/components/add-pet/InputField";
 import { Picker } from "@react-native-picker/picker";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/config/FirebaseConfig";
+import { db, storage } from "@/config/FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function AddNewPet() {
   const navigation = useNavigation();
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<{ [key: string]: string }>({});
   const [gender, setGender] = useState<string>();
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>();
@@ -43,7 +46,13 @@ export default function AddNewPet() {
   };
 
   const handleChange = (name: string, value: string) => {
-    setFormData({ ...formData, [name]: value });
+    if (value !== "" && value !== null) {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      const updatedFormData = { ...formData };
+      delete updatedFormData[name];
+      setFormData(updatedFormData);
+    }
   };
 
   const imagePicker = async () => {
@@ -53,8 +62,7 @@ export default function AddNewPet() {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
+    // console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -62,7 +70,50 @@ export default function AddNewPet() {
   };
 
   const onSubmit = () => {
-    console.log(formData);
+    if (Object.keys(formData).length < 8) {
+      const message = "All fields are required.";
+      if (Platform.OS === "android") {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+      } else {
+        alert(message);
+      }
+      return;
+    } else if (!image) {
+      const message = "No photo uploaded.";
+      if (Platform.OS === "android") {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+      } else {
+        alert(message);
+      }
+    } else {
+      uploadImage();
+    }
+  };
+
+  /**
+   * Upload image to firebase storage
+   * current not tested due to firebase plan limitation
+   */
+  const uploadImage = async () => {
+    if (image) {
+      const response = await fetch(image);
+      const blob = await response.blob();
+      const storageRef = ref(
+        storage,
+        `/` + Date.now() + `&${formData.name}.png`
+      );
+      uploadBytes(storageRef, blob)
+        .then((snapshot) => {
+          console.log(snapshot.metadata, "Fie uploaded successfully");
+        })
+        .then((res) =>
+          getDownloadURL(storageRef).then(async (url) => {
+            console.log(url);
+          })
+        );
+    } else {
+      console.error("No image selected");
+    }
   };
 
   return (
