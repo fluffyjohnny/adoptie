@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { getFavoriteList } from "@/shared/Shared";
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     marginTop: 20,
+    height: "100%",
   },
   title: {
     marginBottom: 20,

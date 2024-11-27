@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
+import ChatScreen from "../inbox/Index";
 
 export default function Inbox() {
   return (
     <View>
-      <Text>Inbox</Text>
+      <ChatScreen />
     </View>
   );
 }
