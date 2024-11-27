@@ -13,6 +13,12 @@ import InputField from "@/components/add-pet/InputField";
 export default function AddNewPet() {
   const navigation = useNavigation();
 
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
   useEffect(() => {
     navigation.setOptions({
       headerTitle: "",
@@ -26,12 +32,42 @@ export default function AddNewPet() {
         source={require("../../assets/images/placeholder.png")}
         style={styles.image}
       />
-      <InputField title="Pet Name*" field="name" numberOfLines={undefined} />
-      <InputField title="Breed*" field="breed" numberOfLines={undefined} />
-      <InputField title="Age*" field="age" numberOfLines={undefined} />
-      <InputField title="Weight*" field="weight" numberOfLines={undefined} />
-      <InputField title="Address*" field="address" numberOfLines={undefined} />
-      <InputField title="About*" field="about" numberOfLines={5} />
+      <InputField
+        title="Pet Name*"
+        field="name"
+        numberOfLines={undefined}
+        handleChange={handleChange}
+      />
+      <InputField
+        title="Breed*"
+        field="breed"
+        numberOfLines={undefined}
+        handleChange={handleChange}
+      />
+      <InputField
+        title="Age*"
+        field="age"
+        numberOfLines={undefined}
+        handleChange={handleChange}
+      />
+      <InputField
+        title="Weight*"
+        field="weight"
+        numberOfLines={undefined}
+        handleChange={handleChange}
+      />
+      <InputField
+        title="Address*"
+        field="address"
+        numberOfLines={undefined}
+        handleChange={handleChange}
+      />
+      <InputField
+        title="About*"
+        field="about"
+        numberOfLines={5}
+        handleChange={handleChange}
+      />
       <TouchableOpacity style={styles.btn}>
         <Text style={styles.btnText}>Submit</Text>
       </TouchableOpacity>

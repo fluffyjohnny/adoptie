@@ -6,22 +6,20 @@ interface InputFieldProps {
   title: string;
   field: string;
   numberOfLines: number | undefined;
+  handleChange: (field: string, value: string) => void;
 }
 
 export default function InputField({
   title,
   field,
   numberOfLines,
+  handleChange,
 }: InputFieldProps) {
-  const handleInputChange = (change: string, value: string) => {
-    console.log(change, value);
-  };
-
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{title}</Text>
       <TextInput
-        onChangeText={(e) => handleInputChange(field, e)}
+        onChangeText={(e) => handleChange(field, e)}
         numberOfLines={numberOfLines}
         multiline={numberOfLines ? true : false}
         style={styles.input}
