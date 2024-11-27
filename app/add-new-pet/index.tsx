@@ -7,20 +7,23 @@ import {
   View,
   ToastAndroid,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import Colors from "@/constants/Colors";
 import InputField from "@/components/add-pet/InputField";
 import { Picker } from "@react-native-picker/picker";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db, storage } from "@/config/FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useUser } from "@clerk/clerk-expo";
 
 export default function AddNewPet() {
   const navigation = useNavigation();
-
+  const { user } = useUser();
+  const [loader, setLoader] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
   const [gender, setGender] = useState<string>();
   const [categories, setCategories] = useState<any[]>([]);
@@ -86,7 +89,10 @@ export default function AddNewPet() {
         alert(message);
       }
     } else {
-      uploadImage();
+      setLoader(true);
+      // uploadImage();
+      uploadData("https://via.placeholder.com/150");
+      setLoader(false);
     }
   };
 
@@ -109,6 +115,7 @@ export default function AddNewPet() {
         .then((res) =>
           getDownloadURL(storageRef).then(async (url) => {
             console.log(url);
+            uploadData(url);
           })
         );
     } else {
@@ -116,9 +123,28 @@ export default function AddNewPet() {
     }
   };
 
+  /**
+   * Upload data to firestore
+   * @param url image url
+   */
+  const uploadData = async (url: string) => {
+    const docID = Date.now().toString();
+    await setDoc(doc(db, "Pets", docID), {
+      ...formData,
+      image: url,
+      username: user?.fullName,
+      email: user?.primaryEmailAddress?.emailAddress,
+      userImage: user?.imageUrl,
+      id: docID,
+    });
+
+    router.replace("/(tabs)/home");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Add New Pet</Text>
+      <Text style={styles.label}>Image*</Text>
       <TouchableOpacity onPress={imagePicker}>
         {!image ? (
           <Image
@@ -217,8 +243,12 @@ export default function AddNewPet() {
         numberOfLines={5}
         handleChange={handleChange}
       />
-      <TouchableOpacity style={styles.btn} onPress={onSubmit}>
-        <Text style={styles.btnText}>Submit</Text>
+      <TouchableOpacity style={styles.btn} onPress={onSubmit} disabled={loader}>
+        {loader ? (
+          <ActivityIndicator size="large" color={Colors.BLACK} />
+        ) : (
+          <Text style={styles.btnText}>Submit</Text>
+        )}
       </TouchableOpacity>
     </ScrollView>
   );
@@ -232,6 +262,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: "outfit-bold",
+    marginBottom: 10,
   },
   image: {
     width: 100,
@@ -239,6 +270,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 15,
     borderColor: Colors.GRAY,
+    marginBottom: 10,
   },
   btn: {
     marginTop: 15,

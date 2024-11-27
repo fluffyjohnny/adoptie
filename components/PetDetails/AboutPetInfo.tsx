@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Colors from "@/constants/Colors";
 
 export default function AboutPetInfo({ pet }: any) {
-  const [readMore, setReadMore] = useState(true);
+  const [readMore, setReadMore] = useState(false);
+
+  useEffect(() => {
+    if (pet?.about?.length > 100) setReadMore(true);
+  }, []);
 
   return (
     <View>
