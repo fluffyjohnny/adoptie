@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import React from "react";
+import { useState } from "react";
 import Colors from "@/constants/Colors";
 
 interface InputFieldProps {
@@ -15,15 +15,28 @@ export default function InputField({
   numberOfLines,
   handleChange,
 }: InputFieldProps) {
+  const [error, setError] = useState<string | null>(null);
+
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{title}</Text>
       <TextInput
         onChangeText={(e) => handleChange(field, e)}
+        onEndEditing={(e) => {
+          if (
+            e.nativeEvent.text?.trim() === "" ||
+            e.nativeEvent.text?.trim() === undefined
+          ) {
+            setError("Field required.");
+          } else {
+            setError("");
+          }
+        }}
         numberOfLines={numberOfLines}
         multiline={numberOfLines ? true : false}
         style={styles.input}
       />
+      {!!error && <Text style={{ color: "red" }}>{error}</Text>}
     </View>
   );
 }

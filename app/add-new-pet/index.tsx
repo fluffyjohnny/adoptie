@@ -13,6 +13,7 @@ import InputField from "@/components/add-pet/InputField";
 import { Picker } from "@react-native-picker/picker";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
+import * as ImagePicker from "expo-image-picker";
 
 export default function AddNewPet() {
   const navigation = useNavigation();
@@ -21,6 +22,9 @@ export default function AddNewPet() {
   const [gender, setGender] = useState<string>();
   const [categories, setCategories] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>();
+  const [image, setImage] = useState<string>();
+  const [genderError, setGenderError] = useState<string | null>(null);
+  const [categoryError, setCategoryError] = useState<string | null>(null);
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,6 +46,21 @@ export default function AddNewPet() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const imagePicker = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   const onSubmit = () => {
     console.log(formData);
   };
@@ -49,10 +68,16 @@ export default function AddNewPet() {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Add New Pet</Text>
-      <Image
-        source={require("../../assets/images/placeholder.png")}
-        style={styles.image}
-      />
+      <TouchableOpacity onPress={imagePicker}>
+        {!image ? (
+          <Image
+            source={require("../../assets/images/placeholder.png")}
+            style={styles.image}
+          />
+        ) : (
+          <Image source={{ uri: image }} style={styles.image} />
+        )}
+      </TouchableOpacity>
       <InputField
         title="Pet Name*"
         field="name"
@@ -65,9 +90,16 @@ export default function AddNewPet() {
           selectedValue={selectedCategory}
           style={styles.input}
           onValueChange={(value, index) => {
+            if (value === null) {
+              setCategoryError("Field required.");
+            } else {
+              setCategoryError("");
+            }
+
             setSelectedCategory(value), handleChange("category", value);
           }}
         >
+          <Picker.Item key={1} label="-" value={null} />
           {categories.map((category) => (
             <Picker.Item
               key={category.name}
@@ -76,6 +108,9 @@ export default function AddNewPet() {
             />
           ))}
         </Picker>
+        {!!categoryError && (
+          <Text style={{ color: "red", marginTop: 5 }}>{categoryError}</Text>
+        )}
       </View>
       <InputField
         title="Breed*"
@@ -101,13 +136,23 @@ export default function AddNewPet() {
           selectedValue={gender}
           style={styles.input}
           onValueChange={(value, index) => {
+            if (value === null) {
+              setGenderError("Field required.");
+            } else {
+              setGenderError("");
+            }
+
             setGender(value), handleChange("sex", value);
           }}
         >
+          <Picker.Item label="-" value={null} />
           <Picker.Item label={"Male"} value={"male"} />
           <Picker.Item label={"Female"} value={"female"} />
           <Picker.Item label={"Unknown"} value={"unknown"} />
         </Picker>
+        {!!genderError && (
+          <Text style={{ color: "red", marginTop: 5 }}>{genderError}</Text>
+        )}
       </View>
       <InputField
         title="Address*"
