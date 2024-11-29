@@ -3,16 +3,20 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
+import UserItem from "@/components/Inbox/UserItem";
 
 export default function Inbox() {
   const { user } = useUser();
   const [userList, setUserList] = useState<any[]>([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     user && getUserList();
   }, [user]);
 
   const getUserList = async () => {
+    setUserList([]); // reset list
+    setLoader(true);
     const q = query(
       collection(db, "Inbox"),
       where(
@@ -26,6 +30,7 @@ export default function Inbox() {
     querySnapshot.forEach((doc) => {
       setUserList((x) => [...x, doc.data()]);
     });
+    setLoader(false);
   };
 
   const mapOtherUserList = () => {
@@ -38,12 +43,13 @@ export default function Inbox() {
       )[0];
       const res = {
         docId: x.id,
-        ...otherUser[0],
+        ...otherUser,
       };
 
       list.push(res);
     });
 
+    console.log(list);
     return list;
   };
 
@@ -51,11 +57,12 @@ export default function Inbox() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Inbox</Text>
       <FlatList
+        style={styles.list}
+        onRefresh={getUserList}
+        refreshing={loader}
         data={mapOtherUserList()}
-        renderItem={(x) => (
-          <View>
-            <Text>{x.docId}</Text>
-          </View>
+        renderItem={({ item, index }) => (
+          <UserItem userInfo={item} key={index} />
         )}
       />
     </SafeAreaView>
@@ -71,5 +78,9 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "outfit-bold",
     fontSize: 20,
+  },
+  list: {
+    marginTop: 20,
+    height: 100,
   },
 });
