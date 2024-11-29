@@ -18,6 +18,7 @@ export default function Profile() {
   const router = useRouter();
   const menu: { id: number; name: string; icon: string; path: string }[] = [
     { id: 1, name: "Add New Pet", icon: "add-circle", path: "/add-new-pet" },
+    { id: 5, name: "My posts", icon: "bookmark", path: "/user-posts" },
     { id: 2, name: "Favorites", icon: "heart", path: "/(tabs)/favorites" },
     { id: 3, name: "Inbox", icon: "chatbubble", path: "/(tabs)/inbox" },
     { id: 4, name: "Logout", icon: "exit", path: "logout" },
@@ -26,8 +27,6 @@ export default function Profile() {
   const handlePress = (path: any) => {
     if (path === "logout") {
       signOut();
-
-      router.push("/");
       return;
     }
     router.push(path);

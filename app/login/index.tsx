@@ -6,15 +6,14 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import React from "react";
+import { useCallback, useEffect } from "react";
 import Colors from "@/constants/Colors";
 import * as WebBrowser from "expo-web-browser";
-import { Link } from "expo-router";
 import { useOAuth } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 
 export const useWarmUpBrowser = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Warm up the android browser to improve UX
     // https://docs.expo.dev/guides/authentication/#improving-user-experience
     void WebBrowser.warmUpAsync();
@@ -31,7 +30,7 @@ export default function LoginScreen() {
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
-  const onPress = React.useCallback(async () => {
+  const onPress = useCallback(async () => {
     try {
       const { createdSessionId, signIn, signUp, setActive } =
         await startOAuthFlow({

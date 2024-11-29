@@ -36,7 +36,7 @@ export default function PetListItem({ pet }: PetListItemProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    flex: 1,
     padding: 15,
     marginRight: 15,
     marginBottom: 15,
