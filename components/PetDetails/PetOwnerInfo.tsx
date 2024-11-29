@@ -15,7 +15,7 @@ export default function PetOwnerInfo({ pet }: any) {
             style={styles.image}
           />
           <View>
-            <Text style={styles.title}>{pet?.ownerName ?? "Private"}</Text>
+            <Text style={styles.title}>{pet?.username ?? "Private"}</Text>
             <Text style={styles.subtitle}>Pet Owner</Text>
           </View>
         </View>
