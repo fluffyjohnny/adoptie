@@ -1,23 +1,40 @@
-import { StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import { useUser } from "@clerk/clerk-expo";
 import { GiftedChat } from "react-native-gifted-chat";
+import moment from "moment";
 
 export default function ChatScreen() {
   const param = useLocalSearchParams();
   const navigation = useNavigation();
   const { user } = useUser();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any[]>([]);
 
   useEffect(() => {
     getUserDetails();
+
+    const unsubscribe = onSnapshot(
+      collection(db, "Inbox", param?.chatID as string, "Messages"),
+      (doc) => {
+        const res = doc.docs.map((x) => ({ _id: x.id, ...x.data() }));
+        setMessages(res);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   const onSend = async (newMessages: any = []) => {
     setMessages((prevMessages) => GiftedChat.append(prevMessages, newMessages));
+    newMessages[0].createdAt = moment().format("MM-DD-YYY hh:mm:ss");
     await addDoc(
       collection(db, "Inbox", param?.chatID as string, "Messages"),
       newMessages[0]
@@ -55,10 +72,3 @@ export default function ChatScreen() {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    marginVertical: 15,
-  },
-});
