@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import Colors from "@/constants/Colors";
-import InputField from "@/components/add-pet/InputField";
+import InputField from "@/components/AddPet/InputField";
 import { Picker } from "@react-native-picker/picker";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db, storage } from "@/config/FirebaseConfig";
