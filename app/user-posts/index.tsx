@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     fontFamily: "outfit",
-    fontSize: 15,
+    fontSize: 16,
   },
   noPost: {
     fontFamily: "outfit",
